@@ -13,12 +13,14 @@ def sleepPerUnit(func):
 @sleepPerUnit
 def accessWorkingDir():
     currentPath = os.getcwd()
-    print("cd {}\n".format(currentPath))
+    print("$ cd {}\n".format(currentPath))
     os.chdir("uploadedFiles")
+
 
 @sleepPerUnit
 def backToRootDir():
     currentPath = os.getcwd()
+    print("$ cd ..\n")
     os.chdir("..")
 
 
@@ -31,31 +33,49 @@ def getDateTimeStr():
 @sleepPerUnit
 def makeNewFile():
     fileName = format(getDateTimeStr() + ".py")
+    print("$ touch " + fileName + "\n")
     os.system("touch " + fileName)
-    print("create >> " + fileName + "\n")
 
 
 @sleepPerUnit
 def gitAddCommitPush():
-    print("$ git add .\n")
-    os.system("git add .")
-    print("\n$ git commit -m \"{}\"\n".format(getDateTimeStr()))
-    os.system("git commit -m \"{}\"".format(getDateTimeStr()))
-    print("\n$ git push origin master\n")  
-    os.system("git push origin master")
-    print("\nupload complete")
+    COMMAND_LIST = [
+        "git add .",
+        "git commit -m \"{}\"".format(getDateTimeStr()),
+        "git push origin master"
+    ]
+
+    for COMMAND in COMMAND_LIST:
+        print("\n$ " + COMMAND + "\n")
+        os.system(COMMAND)
+
+    print("\n-- UPLOAD COMPLETE {} --\n".format(getDateTimeStr))
 
 
 def autoGitUploade():
     accessWorkingDir()
     makeNewFile()
-    gitAddCommitPush()
     backToRootDir()
+    gitAddCommitPush()
 
-schedule.every(10).minutes.do(autoGitUploade)
-# schedule.every().day.at("16:12").do(autoGitUploade)
 
-while True:
-    schedule.run_pending()
-    sleep(1)
+def uploadEveryMidnight():
+    schedule.every().day.at("00:00").do(autoGitUploade)
+
+    while True:
+        schedule.run_pending()
+        sleep(1)
+
+
+def uploadEveryOneMinute():
+    schedule.every(1).minutes.do(autoGitUploade)
+
+    while True:
+        schedule.run_pending()
+        sleep(1)
+
+
+autoGitUploade()
+# uploadEveryMidnight()
+# uploadEveryOneMinute()
 
