@@ -1,12 +1,12 @@
 import os
 from time import sleep
 from datetime import datetime
+import schedule
 
 def sleepPerUnit(func):
     def wrapper():
         sleep(0.3)
         func()
-        sleep(0.3);
     return wrapper
 
 
@@ -14,8 +14,12 @@ def sleepPerUnit(func):
 def accessWorkingDir():
     currentPath = os.getcwd()
     print("cd {}\n".format(currentPath))
-    os.system("cd {}".format(currentPath))
     os.chdir("uploadedFiles")
+
+@sleepPerUnit
+def backToRootDir():
+    currentPath = os.getcwd()
+    os.chdir("..")
 
 
 def getDateTimeStr():
@@ -39,8 +43,19 @@ def gitAddCommitPush():
     os.system("git commit -m \"{}\"".format(getDateTimeStr()))
     print("\n$ git push origin master\n")  
     os.system("git push origin master")
+    print("\nupload complete")
 
 
-accessWorkingDir()
-makeNewFile()
-gitAddCommitPush()
+def autoGitUploade():
+    accessWorkingDir()
+    makeNewFile()
+    gitAddCommitPush()
+    backToRootDir()
+
+schedule.every(10).minutes.do(autoGitUploade)
+# schedule.every().day.at("16:12").do(autoGitUploade)
+
+while True:
+    schedule.run_pending()
+    sleep(1)
+
