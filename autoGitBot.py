@@ -3,6 +3,7 @@ from time import sleep
 from datetime import datetime
 import schedule
 
+
 def sleepPerUnit(func):
     def wrapper():
         sleep(0.3)
@@ -59,7 +60,7 @@ def autoGitUploade():
     gitAddCommitPush()
 
 
-def uploadEveryMidnight():
+def uploadEveryNoon():
     schedule.every().day.at("00:00").do(autoGitUploade)
 
     while True:
@@ -76,6 +77,6 @@ def uploadEveryAppointedMinute(minute):
 
 
 # autoGitUploade()
-# uploadEveryMidnight()
+# uploadEveryNoon()
 uploadEveryAppointedMinute(1)
 
