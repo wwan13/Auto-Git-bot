@@ -49,7 +49,7 @@ def gitAddCommitPush():
         print("\n$ " + COMMAND + "\n")
         os.system(COMMAND)
 
-    print("\n-- UPLOAD COMPLETE {} --\n".format(datetime.now))
+    print("\n-- {} UPLOAD COMPLETE --\n".format(datetime.now()))
 
 
 def autoGitUploade():
