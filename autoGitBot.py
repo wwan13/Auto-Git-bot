@@ -67,15 +67,15 @@ def uploadEveryMidnight():
         sleep(1)
 
 
-def uploadEveryOneMinute():
-    schedule.every(1).minutes.do(autoGitUploade)
+def uploadEveryAppointedMinute(minute):
+    schedule.every(minute).minutes.do(autoGitUploade)
 
     while True:
         schedule.run_pending()
         sleep(1)
 
 
-autoGitUploade()
+# autoGitUploade()
 # uploadEveryMidnight()
-# uploadEveryOneMinute()
+uploadEveryAppointedMinute(1)
 
