@@ -40,11 +40,11 @@ def makeNewFile():
 
 @sleepPerUnit
 def gitAddCommitPush():
-    COMMAND_LIST = [
+    COMMAND_LIST = (
         "git add .",
         "git commit -m \"{}\"".format(getDateTimeStr()),
         "git push origin master"
-    ]
+    )
 
     for COMMAND in COMMAND_LIST:
         print("\n$ " + COMMAND + "\n")
@@ -76,7 +76,7 @@ def uploadEveryAppointedMinute(minute):
         sleep(1)
 
 
-# autoGitUploade()
-uploadEveryNoon()
+autoGitUploade()
+# uploadEveryNoon()
 # uploadEveryAppointedMinute(1)
 
