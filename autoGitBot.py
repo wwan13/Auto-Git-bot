@@ -76,7 +76,7 @@ def uploadEveryAppointedMinute(minute):
         sleep(1)
 
 
-autoGitUploade()
-# uploadEveryNoon()
+# autoGitUploade()
+uploadEveryNoon()
 # uploadEveryAppointedMinute(1)
 
