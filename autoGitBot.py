@@ -61,7 +61,7 @@ def autoGitUploade():
 
 
 def uploadEveryNoon():
-    schedule.every().day.at("00:00").do(autoGitUploade)
+    schedule.every().day.at("12:00").do(autoGitUploade)
 
     while True:
         schedule.run_pending()
